@@ -2,60 +2,43 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../Forms/Input';
 import Button from '../Forms/Button';
+import useForm from '../../Hooks/useForm';
 
-function LoginForm() {
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
-  });
+const LoginForm = () => {
+  const username = useForm();
+  const password = useForm();
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    const response = await fetch(
-      'https://dogsapi.origamid.dev/json/jwt-auth/v1/token',
-      {
+    if (username.validate() && password.validate()) {
+      fetch('https://dogsapi.origamid.dev/json/jwt-auth/v1/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(credentials)
-      }
-    );
-
-    const data = await response.json();
-
-    console.log(data);
+        body: JSON.stringify()
+      })
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((json) => {
+          console.log(json);
+        });
+    }
   }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
-  };
 
   return (
     <section>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <Input
-          label="Usuário"
-          type="text"
-          name="username"
-          value={credentials.username}
-          onChange={handleInputChange}
-        />
-        <Input
-          label="Senha"
-          type="password"
-          name="password"
-          value={credentials.password}
-          onChange={handleInputChange}
-        />
+        <Input label="Usuário" type="text" name="username" {...username} />
+        <Input label="Senha" type="password" name="password" {...password} />
         <Button type="submit">Entrar</Button>
       </form>
       <Link to="/login/criar">Criar conta</Link>
     </section>
   );
-}
+};
 
 export default LoginForm;
