@@ -8,6 +8,9 @@
 body {
   --type-first: Helvetica, Arial, sans-serif;
   --type-second: 'Spectral', Georgia;
+  --accent: #fb1;
+  --text-accent: #764701;
+  --accent-hover: #fea;
   font-family: var(--type-first);
   color: #333;
   padding-top: 5rem;
