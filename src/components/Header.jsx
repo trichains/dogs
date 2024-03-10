@@ -11,7 +11,7 @@ const Header = () => {
           <DogsLogo />
         </Link>
         <Link className={styles.login} to="/login">
-          Login / Criar
+          Entrar / Criar
         </Link>
       </nav>
     </header>
